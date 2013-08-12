@@ -11,6 +11,14 @@
 |
 */
 
+//create a group of routes that will belong to APIv1
+Route::group(array('prefix' => 'v1'), function()
+{
+  //... insert API routes here...
+  Route::resource('campaigns', 'v1\CampaignsController'); //notice the namespace
+  Route::resource('campaigns.comments', 'v1\CampaignsCommentsController'); //notice the namespace, and the nesting
+});
+
 //backbone app route
 Route::get('/', function()
 {
@@ -18,3 +26,7 @@ Route::get('/', function()
   //notice that we do not need to provide the .mustache extension
   return View::make('layouts.application')->nest('content', 'app');
 });
+
+Route::resource('campaigns', 'CampaignsController');
+
+Route::resource('comments', 'CommentsController');
