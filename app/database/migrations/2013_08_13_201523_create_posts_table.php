@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateCampaignsTable extends Migration {
+class CreatePostsTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,10 +12,11 @@ class CreateCampaignsTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('campaigns', function(Blueprint $table) {
+		Schema::create('posts', function(Blueprint $table) {
 			$table->increments('id');
 			$table->string('title');
-			$table->text('description');
+			$table->text('content');
+			$table->string('author_name');
 			$table->timestamps();
 		});
 	}
@@ -27,7 +28,7 @@ class CreateCampaignsTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('campaigns');
+		Schema::drop('posts');
 	}
 
 }

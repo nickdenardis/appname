@@ -11,12 +11,15 @@
 |
 */
 
+App::bind('PostRepositoryInterface', 'EloquentPostRepository');
+App::bind('CommentRepositoryInterface', 'EloquentCommentRepository');
+
 //create a group of routes that will belong to APIv1
 Route::group(array('prefix' => 'v1'), function()
 {
-  //... insert API routes here...
-  Route::resource('campaigns', 'v1\CampaignsController'); //notice the namespace
-  Route::resource('campaigns.comments', 'v1\CampaignsCommentsController'); //notice the namespace, and the nesting
+	//... insert API routes here...
+	Route::resource('posts', 'V1\PostsController'); //notice the namespace
+	Route::resource('posts.comments', 'V1\PostsCommentsController'); //notice the namespace, and the nesting
 });
 
 //backbone app route
@@ -27,6 +30,6 @@ Route::get('/', function()
   return View::make('layouts.application')->nest('content', 'app');
 });
 
-Route::resource('campaigns', 'CampaignsController');
+Route::resource('posts', 'PostsController');
 
 Route::resource('comments', 'CommentsController');

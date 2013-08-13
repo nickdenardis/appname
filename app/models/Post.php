@@ -1,17 +1,17 @@
 <?php
 /**
- * Represent a Comment Item, or Collection
+ * Represent a Post Item, or Collection
  */
-class Comment extends Eloquent {
+class Post extends Eloquent {
  
   /**
    * Items that are "fillable"
    * meaning we can mass-assign them from the constructor
-   * or $comment->fill()
+   * or $post->fill()
    * @var array
    */
   protected $fillable = array(
-    'post_id', 'content', 'author_name'
+    'title', 'content', 'author_name'
   );
  
   /**
@@ -21,18 +21,17 @@ class Comment extends Eloquent {
    * @var array
    */
   public static $rules = array(
-    'post_id'   => 'required|numeric',
-    'content'   => 'required',
+    'title'    => 'required',
     'author_name' => 'required'
   );
  
   /**
-   * Define the relationship with the posts table
-   * @return Model parent Post model
+   * Define the relationship with the comments table
+   * @return Collection collection of Comment Models
    */
-  public function post()
+  public function comments()
   {
-    return $this->belongsTo('Post');
+    return $this->hasMany('Comment');
   }
  
 }
