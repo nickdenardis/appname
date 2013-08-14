@@ -620,3 +620,8 @@ Things that you have to do to get new things rolling
 	  </fieldset>
 	</form>
 
+### Flush the composer auto load
+	composer dump-autoload
+
+### Run your tests one last time
+	vendor/phpunit/phpunit/phpunit.php
