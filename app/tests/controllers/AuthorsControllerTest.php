@@ -57,9 +57,10 @@ class AuthorsControllerTest extends TestCase {
     $mock = Mockery::mock('AuthorRepositoryInterface');
     $mock->shouldReceive('instance')->once()->andReturn(array());
     App::instance('AuthorRepositoryInterface', $mock);
+    
  
     $response = $this->call('GET', route('v1.authors.create'));
-    $this->assertViewHas('post');
+    $this->assertViewHas('author');
   }
  
   public function testEditShouldCallFindByIdMethod()
@@ -69,7 +70,7 @@ class AuthorsControllerTest extends TestCase {
     App::instance('AuthorRepositoryInterface', $mock);
  
     $response = $this->call('GET', route('v1.authors.edit', array(1)));
-    $this->assertViewHas('post');
+    $this->assertViewHas('author');
   }
  
   public function testStoreShouldCallStoreMethod()

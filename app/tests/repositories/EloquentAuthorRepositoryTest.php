@@ -23,7 +23,6 @@ class EloquentAuthorRepositoryTest extends TestCase {
   public function testValidatePasses()
   {
     $reply = $this->repo->validate(array(
-      'author_id'   => 1,
       'name'   => 'Superman',
       'email' => 'superman@gmail.com',
       'website' => 'http://superman.com/'
@@ -36,8 +35,8 @@ class EloquentAuthorRepositoryTest extends TestCase {
   {
     try {
       $reply = $this->repo->validate(array(
-        'author_id'   => 1,
-        'name'   => 'Superman'
+        'name'   => 'Superman',
+        'website' => 'http://superman.com/'
       ));
     }
     catch(ValidationException $expected)
@@ -47,28 +46,11 @@ class EloquentAuthorRepositoryTest extends TestCase {
  
     $this->fail('ValidationException was not raised');
   }
- 
+  
   public function testValidateFailsWithoutAuthorName()
   {
     try {
       $reply = $this->repo->validate(array(
-        'author_id'   => 1,
-        'email' => 'superman@gmail.com'
-      ));
-    }
-    catch(ValidationException $expected)
-    {
-      return;
-    }
- 
-    $this->fail('ValidationException was not raised');
-  }
- 
-  public function testValidateFailsWithoutAuthorId()
-  {
-    try {
-      $reply = $this->repo->validate(array(
-        'name'   => 'Superman',
         'email' => 'superman@gmail.com',
         'website' => 'http://superman.com/'
       ));
@@ -89,32 +71,32 @@ class EloquentAuthorRepositoryTest extends TestCase {
       'website' => 'http://superman.com/'
     );
  
-    $author = $this->repo->store(1, $author_data);
+    $author = $this->repo->store($author_data);
  
     $this->assertTrue($author instanceof Illuminate\Database\Eloquent\Model);
     $this->assertTrue($author->name === $author_data['name']);
     $this->assertTrue($author->email === $author_data['email']);
   }
- 
+
   public function testUpdateSaves()
   {
     $author_data = array(
       'website' => 'http://supermanwins.com/'
     );
  
-    $author = $this->repo->update(1, 1, $author_data);
+    $author = $this->repo->update(1, $author_data);
  
     $this->assertTrue($author instanceof Illuminate\Database\Eloquent\Model);
     $this->assertTrue($author->website === $author_data['website']);
   }
- 
+
   public function testDestroySaves()
   {
-    $reply = $this->repo->destroy(1,1);
+    $reply = $this->repo->destroy(1);
     $this->assertTrue($reply);
  
     try {
-      $this->repo->findById(1,1);
+      $this->repo->findById(1);
     }
     catch(NotFoundException $expected)
     {

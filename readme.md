@@ -139,9 +139,10 @@ Things that you have to do to get new things rolling
 	    $mock = Mockery::mock('AuthorRepositoryInterface');
 	    $mock->shouldReceive('instance')->once()->andReturn(array());
 	    App::instance('AuthorRepositoryInterface', $mock);
+	    
 	 
 	    $response = $this->call('GET', route('v1.authors.create'));
-	    $this->assertViewHas('post');
+	    $this->assertViewHas('author');
 	  }
 	 
 	  public function testEditShouldCallFindByIdMethod()
@@ -151,7 +152,7 @@ Things that you have to do to get new things rolling
 	    App::instance('AuthorRepositoryInterface', $mock);
 	 
 	    $response = $this->call('GET', route('v1.authors.edit', array(1)));
-	    $this->assertViewHas('post');
+	    $this->assertViewHas('author');
 	  }
 	 
 	  public function testStoreShouldCallStoreMethod()
@@ -215,7 +216,6 @@ Things that you have to do to get new things rolling
 	  public function testValidatePasses()
 	  {
 	    $reply = $this->repo->validate(array(
-	      'author_id'   => 1,
 	      'name'   => 'Superman',
 	      'email' => 'superman@gmail.com',
 	      'website' => 'http://superman.com/'
@@ -228,8 +228,8 @@ Things that you have to do to get new things rolling
 	  {
 	    try {
 	      $reply = $this->repo->validate(array(
-	        'author_id'   => 1,
-	        'name'   => 'Superman'
+	        'name'   => 'Superman',
+	        'website' => 'http://superman.com/'
 	      ));
 	    }
 	    catch(ValidationException $expected)
@@ -239,28 +239,11 @@ Things that you have to do to get new things rolling
 	 
 	    $this->fail('ValidationException was not raised');
 	  }
-	 
+	  
 	  public function testValidateFailsWithoutAuthorName()
 	  {
 	    try {
 	      $reply = $this->repo->validate(array(
-	        'author_id'   => 1,
-	        'email' => 'superman@gmail.com'
-	      ));
-	    }
-	    catch(ValidationException $expected)
-	    {
-	      return;
-	    }
-	 
-	    $this->fail('ValidationException was not raised');
-	  }
-	 
-	  public function testValidateFailsWithoutAuthorId()
-	  {
-	    try {
-	      $reply = $this->repo->validate(array(
-	        'name'   => 'Superman',
 	        'email' => 'superman@gmail.com',
 	        'website' => 'http://superman.com/'
 	      ));
@@ -281,32 +264,32 @@ Things that you have to do to get new things rolling
 	      'website' => 'http://superman.com/'
 	    );
 	 
-	    $author = $this->repo->store(1, $author_data);
+	    $author = $this->repo->store($author_data);
 	 
 	    $this->assertTrue($author instanceof Illuminate\Database\Eloquent\Model);
 	    $this->assertTrue($author->name === $author_data['name']);
 	    $this->assertTrue($author->email === $author_data['email']);
 	  }
-	 
+
 	  public function testUpdateSaves()
 	  {
 	    $author_data = array(
 	      'website' => 'http://supermanwins.com/'
 	    );
 	 
-	    $author = $this->repo->update(1, 1, $author_data);
+	    $author = $this->repo->update(1, $author_data);
 	 
 	    $this->assertTrue($author instanceof Illuminate\Database\Eloquent\Model);
 	    $this->assertTrue($author->website === $author_data['website']);
 	  }
-	 
+
 	  public function testDestroySaves()
 	  {
-	    $reply = $this->repo->destroy(1,1);
+	    $reply = $this->repo->destroy(1);
 	    $this->assertTrue($reply);
 	 
 	    try {
-	      $this->repo->findById(1,1);
+	      $this->repo->findById(1);
 	    }
 	    catch(NotFoundException $expected)
 	    {
@@ -332,6 +315,7 @@ Things that you have to do to get new things rolling
 	    $this->assertTrue($comment instanceof Illuminate\Database\Eloquent\Model);
 	    $this->assertTrue($comment->name === $author_data['name']);
 	  }
+	 
 	}
 
 ### app/controllers/V1/AuthorsController.php

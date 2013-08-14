@@ -54,7 +54,7 @@ Route::get('authors/{id}', function($id)
 {
   $author = App::make('AuthorRepositoryInterface')->findById($id);
   return View::make('layouts.application')->nest('content', 'authors.show', array(
-    'post' => $author
+    'author' => $author
   ));
 });
 
