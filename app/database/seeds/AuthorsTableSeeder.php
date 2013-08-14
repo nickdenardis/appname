@@ -31,9 +31,12 @@ class AuthorsTableSeeder extends Seeder {
 			),
 		);
 
+		DB::connection('cms_prod')->table('authors')->truncate();
+		DB::connection('cms_prod')->table('authors')->insert($authors);
+
 		// Uncomment the below to run the seeder
-		DB::table('authors')->truncate();
-		DB::table('authors')->insert($authors);
+		//DB::table('authors')->truncate();
+		//DB::table('authors')->insert($authors);
 	}
 
 }

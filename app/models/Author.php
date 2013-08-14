@@ -3,6 +3,8 @@
  * Represent an Author
  */
 class Author extends Eloquent {
+
+  public $connection = 'cms_prod';
  
   /**
    * Items that are "fillable"

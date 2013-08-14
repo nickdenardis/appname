@@ -12,7 +12,7 @@ class CreateAuthorsTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('authors', function(Blueprint $table) {
+		Schema::connection('cms_prod')->create('authors', function(Blueprint $table) {
 			$table->increments('id');
 			$table->string('name');
 			$table->string('email');
@@ -28,7 +28,7 @@ class CreateAuthorsTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('authors');
+		Schema::connection('cms_prod')->drop('authors');
 	}
 
 }
