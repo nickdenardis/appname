@@ -26,7 +26,7 @@ return array(
 	|
 	*/
 
-	'default' => 'mysql',
+	'default' => 'app_db',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -52,10 +52,21 @@ return array(
 			'prefix'   => '',
 		),
 
-		'mysql' => array(
+		'app_db' => array(
 			'driver'    => 'mysql',
 			'host'      => 'localhost',
 			'database'  => 'campaigns',
+			'username'  => 'root',
+			'password'  => 'local',
+			'charset'   => 'utf8',
+			'collation' => 'utf8_unicode_ci',
+			'prefix'    => '',
+		),
+
+		'barbdb1' => array(
+			'driver'    => 'mysql',
+			'host'      => 'localhost',
+			'database'  => 'barbdb1',
 			'username'  => 'root',
 			'password'  => 'local',
 			'charset'   => 'utf8',
