@@ -30,25 +30,18 @@ Things that you have to do to get new things rolling
 
 ### app/routes.php
 	App::bind('AuthorRepositoryInterface', 'EloquentAuthorRepository');
-
+	...
 	Route::group(array('prefix' => 'v1'), function(){
     	...
     	Route::resource('authors', 'V1\AuthorsController'); //notice the namespace
     }
-
+    ...
+    Route::resource('authors', 'AuthorsController');
 
 ### Move the controller to the v1 dir
     mv app/controllers/AuthorsController.php app/controllers/V1/
 
-### app/controllers/V1/AuthorsController.php
-	<?php
-	//use our new namespace
-	namespace V1;
-	 
-	//import classes that are not in this new namespace
-	use BaseController;
-
-#### app/database/seeds/AuthorsTableSeeder.php
+### app/database/seeds/AuthorsTableSeeder.php
 	$authors = array(
 		array(
 			'name'    => 'John Doe',

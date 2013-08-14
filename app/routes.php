@@ -15,6 +15,7 @@ App::bind('PostRepositoryInterface', 'EloquentPostRepository');
 App::bind('CommentRepositoryInterface', 'EloquentCommentRepository');
 App::bind('AuthorRepositoryInterface', 'EloquentAuthorRepository');
 
+
 //create a group of routes that will belong to APIv1
 Route::group(array('prefix' => 'v1'), function()
 {
@@ -23,6 +24,7 @@ Route::group(array('prefix' => 'v1'), function()
 	Route::resource('posts.comments', 'V1\PostsCommentsController'); //notice the namespace, and the nesting
   Route::resource('authors', 'V1\AuthorsController'); //notice the namespace
 });
+
 
 Route::get('/', function()
 {
@@ -40,7 +42,7 @@ Route::get('posts/{id}', function($id)
   ));
 });
 
-Route::get('/authors', function()
+Route::get('authors', function()
 {
   $authors = App::make('AuthorRepositoryInterface')->paginate();
   return View::make('layouts.application')->nest('content', 'authors.index', array(
@@ -56,8 +58,7 @@ Route::get('authors/{id}', function($id)
   ));
 });
 
+
 Route::resource('posts', 'PostsController');
-
 Route::resource('comments', 'CommentsController');
-
 Route::resource('authors', 'AuthorsController');
