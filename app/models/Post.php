@@ -11,7 +11,7 @@ class Post extends Eloquent {
    * @var array
    */
   protected $fillable = array(
-    'title', 'content', 'author_name'
+    'title', 'content', 'author_id'
   );
  
   /**
@@ -22,7 +22,7 @@ class Post extends Eloquent {
    */
   public static $rules = array(
     'title'    => 'required',
-    'author_name' => 'required'
+    'author_id' => 'required'
   );
  
   /**
@@ -32,6 +32,15 @@ class Post extends Eloquent {
   public function comments()
   {
     return $this->hasMany('Comment');
+  }
+
+  /**
+   * Define the relationship with the authors table
+   * @return Collection collection of Author Models
+   */
+  public function author()
+  {
+      return $this->belongsTo('Author');
   }
  
 }
