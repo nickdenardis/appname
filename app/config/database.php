@@ -74,6 +74,17 @@ return array(
 			'prefix'    => '',
 		),
 
+		'cms_prod' => array(
+			'driver'    => 'mysql',
+			'host'      => 'localhost',
+			'database'  => 'cms_prod',
+			'username'  => 'root',
+			'password'  => 'local',
+			'charset'   => 'utf8',
+			'collation' => 'utf8_unicode_ci',
+			'prefix'    => '',
+		),
+
 		'pgsql' => array(
 			'driver'   => 'pgsql',
 			'host'     => 'localhost',
