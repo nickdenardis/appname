@@ -22,12 +22,20 @@ Route::group(array('prefix' => 'v1'), function()
 	Route::resource('posts.comments', 'V1\PostsCommentsController'); //notice the namespace, and the nesting
 });
 
-//backbone app route
 Route::get('/', function()
 {
-  //change our view name to the view we created in a previous step
-  //notice that we do not need to provide the .mustache extension
-  return View::make('layouts.application')->nest('content', 'app');
+  $posts = App::make('PostRepositoryInterface')->paginate();
+  return View::make('layouts.application')->nest('content', 'posts.index', array(
+    'posts' => $posts
+  ));
+});
+ 
+Route::get('posts/{id}', function($id)
+{
+  $post = App::make('PostRepositoryInterface')->findById($id);
+  return View::make('layouts.application')->nest('content', 'posts.show', array(
+    'post' => $post
+  ));
 });
 
 Route::resource('posts', 'PostsController');
