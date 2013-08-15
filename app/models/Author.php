@@ -26,4 +26,13 @@ class Author extends Eloquent {
     'name'    => 'required',
     'email' => 'required'
   );
+
+  /**
+   * Define the relationship with the posts table
+   * @return Collection collection of Posts Models
+   */
+  public function posts()
+  {
+    return $this->hasMany('Post');
+  }
 }

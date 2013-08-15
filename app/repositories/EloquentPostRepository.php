@@ -14,6 +14,10 @@ class EloquentPostRepository implements PostRepositoryInterface {
       ->first();
  
     if(!$post) throw new NotFoundException('Post Not Found');
+
+    // Get the author info, no need to save it anywhere.
+    $post->author;
+
     return $post;
   }
  

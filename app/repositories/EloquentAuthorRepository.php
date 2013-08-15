@@ -6,6 +6,10 @@ class EloquentAuthorRepository implements AuthorRepositoryInterface {
   {
     $author = Author::where('id', $id)->first();
     if(!$author) throw new NotFoundException('Author Not Found');
+
+    // Get all the posts
+    $author->posts;
+
     return $author;
   }
  
